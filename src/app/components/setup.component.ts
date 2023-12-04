@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
+import { FeatureToggleModule } from 'ngx-feature-toggle';
 
 @Component({
   selector: 'angular-experiment-setup',
@@ -22,6 +23,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    FeatureToggleModule,
   ],
   templateUrl: './setup.component.html',
   styleUrl: './setup.component.scss',
