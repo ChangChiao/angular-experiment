@@ -6,9 +6,11 @@ import { SetupComponent } from 'src/app/components/setup.component';
   selector: 'angular-experiment-index',
   standalone: true,
   imports: [CommonModule, SetupComponent],
-  template: `<div>
-    <angular-experiment-setup></angular-experiment-setup>
-  </div>`,
+  template: `
+    <div>
+      <angular-experiment-setup></angular-experiment-setup>
+    </div>
+  `,
   styleUrl: './index.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
