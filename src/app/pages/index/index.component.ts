@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { DataImportComponent } from 'src/app/components/data-import/data-import.component';
+import { DraggableComponent } from 'src/app/components/draggable/draggable.component';
 import { SetupComponent } from 'src/app/components/setup/setup.component';
 
 @Component({
@@ -22,11 +23,13 @@ import { SetupComponent } from 'src/app/components/setup/setup.component';
     CommonModule,
     SetupComponent,
     DataImportComponent,
+    DraggableComponent,
     ReactiveFormsModule,
     MatInputModule,
   ],
   template: `
     <div>
+      <angular-experiment-draggable></angular-experiment-draggable>
       <angular-experiment-setup></angular-experiment-setup>
       <form [formGroup]="form">
         <angular-experiment-data-import
