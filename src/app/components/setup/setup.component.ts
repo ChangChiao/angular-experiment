@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
+import { AvatarComponent } from '@joe_chang/ui';
 import { set as setFeatureToggle } from 'feature-toggle-service';
 import { FeatureToggleModule } from 'ngx-feature-toggle';
 
@@ -33,6 +34,7 @@ import { FeatureToggleModule } from 'ngx-feature-toggle';
     MatInputModule,
     FeatureToggleModule,
     MatRadioModule,
+    AvatarComponent,
   ],
   templateUrl: './setup.component.html',
   styleUrl: './setup.component.scss',
