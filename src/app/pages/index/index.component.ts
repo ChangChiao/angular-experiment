@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DataImportComponent } from 'src/app/components/data-import/data-import.component';
 import { DraggableComponent } from 'src/app/components/draggable/draggable.component';
 import { SetupComponent } from 'src/app/components/setup/setup.component';
+import { SocketComponent } from 'src/app/components/socket.component';
 
 @Component({
   selector: 'angular-experiment-index',
@@ -24,6 +25,7 @@ import { SetupComponent } from 'src/app/components/setup/setup.component';
     SetupComponent,
     DataImportComponent,
     DraggableComponent,
+    SocketComponent,
     ReactiveFormsModule,
     MatInputModule,
   ],
@@ -38,6 +40,7 @@ import { SetupComponent } from 'src/app/components/setup/setup.component';
         <input matInput formControlName="projectName" />
         <button (click)="submit()">send</button>
       </form>
+      <angular-experiment-socket></angular-experiment-socket>
     </div>
   `,
   styleUrl: './index.component.scss',
