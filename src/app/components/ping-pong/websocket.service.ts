@@ -39,4 +39,9 @@ export class WebsocketService {
   sendMsg(msg: string) {
     this.#subject$?.next(msg);
   }
+
+  closeWs() {
+    console.log('closeWs!!!!!!!!');
+    this.#subject$?.complete();
+  }
 }

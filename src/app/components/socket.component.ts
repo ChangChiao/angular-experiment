@@ -13,8 +13,16 @@ export class SocketComponent {
   socket = io('http://localhost:3000');
 
   constructor() {
+    this.socket.on('connect', () => {
+      console.log('connected successful');
+    });
+
     this.socket.on('error', (error) => {
       console.log('error---', error);
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log('disconnect', this.socket.connected);
     });
   }
 }

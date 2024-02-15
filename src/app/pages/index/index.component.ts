@@ -14,6 +14,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { DataImportComponent } from 'src/app/components/data-import/data-import.component';
 import { DraggableComponent } from 'src/app/components/draggable/draggable.component';
+import { PingPongComponent } from 'src/app/components/ping-pong/ping-pong.component';
 import { SetupComponent } from 'src/app/components/setup/setup.component';
 import { SocketComponent } from 'src/app/components/socket.component';
 
@@ -28,6 +29,7 @@ import { SocketComponent } from 'src/app/components/socket.component';
     SocketComponent,
     ReactiveFormsModule,
     MatInputModule,
+    PingPongComponent,
   ],
   template: `
     <div>
@@ -40,7 +42,8 @@ import { SocketComponent } from 'src/app/components/socket.component';
         <input matInput formControlName="projectName" />
         <button (click)="submit()">send</button>
       </form>
-      <angular-experiment-socket></angular-experiment-socket>
+      <angular-experiment-ping-pong></angular-experiment-ping-pong>
+      <!-- <angular-experiment-socket></angular-experiment-socket> -->
     </div>
   `,
   styleUrl: './index.component.scss',
