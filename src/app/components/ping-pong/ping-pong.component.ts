@@ -31,20 +31,20 @@ export class PingPongComponent implements OnInit {
       },
       error: () => {
         console.log('error!!!!!!');
-        this.reConnect();
+        // this.reConnect();
       },
       complete: () => {
         console.log('complete!!!');
-        this.reConnect();
+        // this.reConnect();
       },
     });
-    this.pingSubscription = this.pingInterval$.subscribe(() => {
-      this.#wsService.sendMsg('pong');
-    });
+    // this.pingSubscription = this.pingInterval$.subscribe(() => {
+    //   this.#wsService.sendMsg('pong');
+    // });
   }
 
   reConnect() {
-    this.pingSubscription?.unsubscribe();
+    // this.pingSubscription?.unsubscribe();
     clearTimeout(this.retryTimeId);
     this.retryTimeId = setTimeout(() => {
       this.createConnect();
@@ -52,12 +52,12 @@ export class PingPongComponent implements OnInit {
   }
 
   confirmTimeout() {
-    console.log('confirmTimeout');
-    clearTimeout(this.timeoutId);
-    this.timeoutId = setTimeout(() => {
-      console.log('timeOut!!!!');
-      this.#wsService.closeWs();
-    }, 6000);
+    // console.log('confirmTimeout');
+    // clearTimeout(this.timeoutId);
+    // this.timeoutId = setTimeout(() => {
+    //   console.log('timeOut!!!!');
+    //   this.#wsService.closeWs();
+    // }, 6000);
   }
 
   ngOnInit() {

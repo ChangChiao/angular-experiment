@@ -17,6 +17,7 @@ import { DraggableComponent } from 'src/app/components/draggable/draggable.compo
 import { PingPongComponent } from 'src/app/components/ping-pong/ping-pong.component';
 import { SetupComponent } from 'src/app/components/setup/setup.component';
 import { SocketComponent } from 'src/app/components/socket.component';
+import { TableFormComponent } from 'src/app/components/table-form/table-form.component';
 
 @Component({
   selector: 'angular-experiment-index',
@@ -30,9 +31,11 @@ import { SocketComponent } from 'src/app/components/socket.component';
     ReactiveFormsModule,
     MatInputModule,
     PingPongComponent,
+    TableFormComponent,
   ],
   template: `
     <div>
+      <angular-experiment-table-form></angular-experiment-table-form>
       <angular-experiment-draggable></angular-experiment-draggable>
       <angular-experiment-setup></angular-experiment-setup>
       <form [formGroup]="form">

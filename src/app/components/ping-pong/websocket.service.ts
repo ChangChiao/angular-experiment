@@ -10,8 +10,11 @@ export class WebsocketService {
   initialize(url: string): Observable<any> {
     return new Observable((observer) => {
       try {
-        this.#subject$ = webSocket(url);
-        const subscription = this.#subject$.asObservable().subscribe({
+        this.#subject$ = webSocket({
+          url,
+          deserializer: (msg) => msg,
+        }) as any;
+        const subscription = this.#subject$?.asObservable().subscribe({
           next: (msg) => {
             console.log('message received: ' + msg);
             observer.next(msg);
@@ -27,7 +30,7 @@ export class WebsocketService {
         });
 
         return () => {
-          subscription.unsubscribe();
+          subscription?.unsubscribe();
           this.#subject$?.complete();
         };
       } catch (error) {
