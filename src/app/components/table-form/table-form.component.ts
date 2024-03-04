@@ -8,10 +8,17 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { map } from 'rxjs';
+import { debounceTime, map } from 'rxjs';
 import { random } from 'src/app/utils';
 import { ProductList, rowItem } from './model/table-form.model';
 
@@ -20,6 +27,7 @@ import { ProductList, rowItem } from './model/table-form.model';
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
     MatCheckboxModule,
@@ -29,12 +37,17 @@ import { ProductList, rowItem } from './model/table-form.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableFormComponent implements OnInit, AfterViewInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private fb: FormBuilder) {}
   displayedColumns: string[] = ['select', 'id', 'price', 'rating', 'hash'];
   selection = new SelectionModel<rowItem>(true, []);
   tableDataSource = new MatTableDataSource<rowItem>();
+  tableForm!: FormGroup;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  get rowsControl() {
+    return this.tableForm.get('rows') as FormArray;
+  }
 
   ngAfterViewInit() {
     this.tableDataSource.paginator = this.paginator;
@@ -68,10 +81,28 @@ export class TableFormComponent implements OnInit, AfterViewInit {
       })
     );
   }
+  onSubmit() {}
 
   ngOnInit(): void {
+    this.tableForm = this.fb.group({
+      rows: this.fb.array([]),
+    });
     this.getApiData().subscribe((d: rowItem[]) => {
       this.tableDataSource.data = d;
+      d.forEach((item) => {
+        this.rowsControl.push(
+          this.fb.group({
+            hash: [
+              item.hash,
+              [Validators.required, Validators.max(1), Validators.min(999)],
+            ],
+          })
+        );
+      });
+    });
+
+    this.tableForm.valueChanges.pipe(debounceTime(700)).subscribe((value) => {
+      console.log('value', value);
     });
   }
 }
