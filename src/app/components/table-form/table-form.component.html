@@ -1,4 +1,4 @@
-<form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="tableForm">
   <table mat-table [dataSource]="tableDataSource" class="mat-elevation-z8">
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -47,12 +47,14 @@
           *matCellDef="let element; let index = index"
           [formGroupName]="index"
         >
-          <input
-            formControlName="hash"
-            matInput
-            placeholder="Ex. Pizza"
-            value="Sushi"
-          />
+          <mat-form-field class="example-full-width">
+            <input
+              formControlName="hash"
+              matInput
+              placeholder="Ex. Pizza"
+              value="Sushi"
+            />
+          </mat-form-field>
         </td>
       </ng-container>
 
@@ -68,4 +70,5 @@
     aria-label="Select page"
   >
   </mat-paginator>
+  <button [disabled]="tableForm.invalid" (click)="onSubmit()">submit</button>
 </form>

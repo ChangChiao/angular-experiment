@@ -16,6 +16,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { debounceTime, map } from 'rxjs';
@@ -31,6 +33,8 @@ import { ProductList, rowItem } from './model/table-form.model';
     MatTableModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './table-form.component.html',
   styleUrl: './table-form.component.scss',
@@ -94,7 +98,7 @@ export class TableFormComponent implements OnInit, AfterViewInit {
           this.fb.group({
             hash: [
               item.hash,
-              [Validators.required, Validators.max(1), Validators.min(999)],
+              [Validators.required, Validators.min(1), Validators.max(999)],
             ],
           })
         );
