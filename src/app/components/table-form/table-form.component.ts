@@ -71,6 +71,10 @@ export class TableFormComponent implements OnInit, AfterViewInit {
       : this.tableDataSource.data.forEach((row) => this.selection.select(row));
   }
 
+  handleChange(id: string) {
+    console.log('id', id);
+  }
+
   getApiData() {
     console.log('getApiData');
     return this.http.get<ProductList>('https://dummyjson.com/products').pipe(
