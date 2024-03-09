@@ -2,3 +2,6 @@
 <div>
   {{ store.isLoading() ? 'true' : 'false' }}
 </div>
+<ul>
+  <li *ngFor="let book of store.books()">{{ book.id }} {{ book.todo }}</li>
+</ul>

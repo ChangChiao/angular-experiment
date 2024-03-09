@@ -1,4 +1,4 @@
-import { computed } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -6,7 +6,9 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { finalize, map } from 'rxjs';
 import { Book } from './book.model';
+import { BookService } from './book.service';
 
 type BooksState = {
   books: Book[];
@@ -25,9 +27,22 @@ export const BooksStore = signalStore(
   withComputed(({ books }) => ({
     booksCount: computed(() => books().length),
   })),
-  withMethods((store) => ({
+  withMethods((store, booksService = inject(BookService)) => ({
     updateBooks(param: Book[]): void {
       patchState(store, (state) => ({ books: param }));
+    },
+    getAllBooks() {
+      patchState(store, { isLoading: true });
+      booksService.$books
+        .pipe(
+          map((data) => data.todos),
+          finalize(() => {
+            patchState(store, { isLoading: false });
+          })
+        )
+        .subscribe((d) => {
+          patchState(store, { books: d });
+        });
     },
   }))
 );
