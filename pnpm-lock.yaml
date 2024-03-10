@@ -38,6 +38,9 @@ dependencies:
   '@joe_chang/ui':
     specifier: ^0.0.1
     version: 0.0.1(@angular/common@17.1.3)(@angular/core@17.1.3)
+  '@ngrx/component-store':
+    specifier: ^17.1.1
+    version: 17.1.1(@angular/core@17.1.3)(rxjs@7.8.1)
   '@ngrx/signals':
     specifier: ^17.0.1
     version: 17.0.1(@angular/core@17.1.3)(rxjs@7.8.1)
@@ -53,6 +56,9 @@ dependencies:
   rxjs:
     specifier: ~7.8.1
     version: 7.8.1
+  rxjs-interop:
+    specifier: link:@ngrx/signals/rxjs-interop
+    version: link:@ngrx/signals/rxjs-interop
   socket.io-client:
     specifier: ^4.7.4
     version: 4.7.4
@@ -4022,6 +4028,27 @@ packages:
     dependencies:
       '@material/feature-targeting': 15.0.0-canary.7f224ddd4.0
       '@material/theme': 15.0.0-canary.7f224ddd4.0
+      tslib: 2.6.2
+    dev: false
+
+  /@ngrx/component-store@17.1.1(@angular/core@17.1.3)(rxjs@7.8.1):
+    resolution: {integrity: sha512-pknwettIC52JELk9PjhTgBBsY/WtdltB91jPW9c6hWCxW8X89ipV9Fe+alKBhqqL8pQiK/gPpWmbp0zPauUChQ==}
+    peerDependencies:
+      '@angular/core': ^17.0.0
+      rxjs: ^6.5.3 || ^7.5.0
+    dependencies:
+      '@angular/core': 17.1.3(rxjs@7.8.1)(zone.js@0.14.4)
+      '@ngrx/operators': 17.0.0-beta.0(rxjs@7.8.1)
+      rxjs: 7.8.1
+      tslib: 2.6.2
+    dev: false
+
+  /@ngrx/operators@17.0.0-beta.0(rxjs@7.8.1):
+    resolution: {integrity: sha512-EbO8AONuQ6zo2v/mPyBOi4y0CTAp1x4Z+bx7ZF+Pd8BL5ma53BTCL1TmzaeK5zPUe0yApudLk9/ZbHXPnVox5A==}
+    peerDependencies:
+      rxjs: ^6.5.3 || ^7.4.0
+    dependencies:
+      rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
 
