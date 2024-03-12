@@ -1,0 +1,15 @@
+<form [formGroup]="form">
+  <mat-checkbox formControlName="toggle">toggle</mat-checkbox>
+  <mat-form-field *ngIf="form.get('toggle')?.value">
+    <input matInput formControlName="name" placeholder="input" />
+    <mat-error *ngIf="form.get('name')?.hasError('required')">
+      Name is required
+    </mat-error>
+    <mat-error *ngIf="form.get('name')?.hasError('minlength')">
+      Name must be at least 4 characters long
+    </mat-error>
+    <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+      Name cannot be more than 24 characters long
+    </mat-error>
+  </mat-form-field>
+</form>

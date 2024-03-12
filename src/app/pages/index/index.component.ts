@@ -14,6 +14,7 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { DataImportComponent } from 'src/app/components/data-import/data-import.component';
 import { DraggableComponent } from 'src/app/components/draggable/draggable.component';
+import { DynamicFormComponent } from 'src/app/components/dynamic-form/dynamic-form.component';
 import { NgrxSignalStoreComponent } from 'src/app/components/ngrx-signal-store/ngrx-signal-store.component';
 import { PingPongComponent } from 'src/app/components/ping-pong/ping-pong.component';
 import { SetupComponent } from 'src/app/components/setup/setup.component';
@@ -34,9 +35,11 @@ import { TableFormComponent } from 'src/app/components/table-form/table-form.com
     PingPongComponent,
     TableFormComponent,
     NgrxSignalStoreComponent,
+    DynamicFormComponent,
   ],
   template: `
     <div>
+      <angular-experiment-dynamic-form></angular-experiment-dynamic-form>
       <angular-experiment-ngrx-signal-store></angular-experiment-ngrx-signal-store>
       <angular-experiment-table-form></angular-experiment-table-form>
       <angular-experiment-draggable></angular-experiment-draggable>
