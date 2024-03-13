@@ -1,0 +1,22 @@
+<form [ngFormOptions]="{ updateOn: 'blur' }">
+  <label for="name">First Name</label>
+  <pre>{{ data | json }}</pre>
+  <input
+    [(ngModel)]="data.userName"
+    [ngModelOptions]="{ name: 'userName', updateOn: 'blur' }"
+    name="userName"
+    type="text"
+    placeholder="Enter your name"
+  />
+
+  <!-- standalone = out of form control -->
+
+  <!-- <input
+    [(ngModel)]="data.userName"
+    [ngModelOptions]="{ name: 'userName', updateOn: 'blur', standalone: true}"
+    name="userName"
+    type="text"
+    placeholder="Enter your name"
+  /> -->
+  <button type="submit">submit</button>
+</form>
