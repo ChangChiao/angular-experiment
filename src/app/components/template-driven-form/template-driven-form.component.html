@@ -8,6 +8,9 @@
   <input
     [(ngModel)]="data.userName"
     [ngModelOptions]="{ name: 'userName', updateOn: 'blur' }"
+    required
+    pattern="^[a-zA-Z0-9_.]+$"
+    minlength="5"
     name="userName"
     type="text"
     placeholder="Enter your name"
@@ -38,5 +41,5 @@
     type="text"
     placeholder="Enter your name"
   /> -->
-  <button type="submit">submit</button>
+  <button [disabled]="form.invalid" type="submit">submit</button>
 </form>
