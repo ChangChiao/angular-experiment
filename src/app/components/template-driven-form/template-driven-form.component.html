@@ -1,4 +1,8 @@
-<form [ngFormOptions]="{ updateOn: 'blur' }">
+<form
+  #form="ngForm"
+  (ngSubmit)="onSubmitForm(form)"
+  [ngFormOptions]="{ updateOn: 'blur' }"
+>
   <label for="name">First Name</label>
   <pre>{{ data | json }}</pre>
   <input
@@ -8,6 +12,22 @@
     type="text"
     placeholder="Enter your name"
   />
+  <fieldset ngModelGroup="address">
+    <label for="city">City</label>
+    <input
+      [(ngModel)]="data.address.city"
+      name="city"
+      type="text"
+      placeholder="Enter your city"
+    />
+    <label for="state">street</label>
+    <input
+      [(ngModel)]="data.address.street"
+      name="state"
+      type="text"
+      placeholder="Enter your state"
+    />
+  </fieldset>
 
   <!-- standalone = out of form control -->
 

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'angular-experiment-template-driven-form',
@@ -14,5 +14,13 @@ export class TemplateDrivenFormComponent {
   data = {
     userName: '',
     password: '',
+    address: {
+      city: '',
+      street: '',
+    },
   };
+
+  onSubmitForm(form: NgForm) {
+    console.log('form', form.value);
+  }
 }
