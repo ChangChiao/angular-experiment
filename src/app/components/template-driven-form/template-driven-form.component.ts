@@ -1,11 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { BanWordsDirective } from './validators/ban-words.directive';
+import { PasswordShouldMatchDirective } from './validators/password-should-match.directive';
 
 @Component({
   selector: 'angular-experiment-template-driven-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    BanWordsDirective,
+    PasswordShouldMatchDirective,
+    FormsModule,
+  ],
   templateUrl: './template-driven-form.component.html',
   styleUrl: './template-driven-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,7 +20,10 @@ import { FormsModule, NgForm } from '@angular/forms';
 export class TemplateDrivenFormComponent {
   data = {
     userName: '',
-    password: '',
+    password: {
+      password: '',
+      confirmPassword: '',
+    },
     address: {
       city: '',
       street: '',

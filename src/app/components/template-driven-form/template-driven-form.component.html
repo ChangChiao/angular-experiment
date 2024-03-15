@@ -1,20 +1,58 @@
-<form
-  #form="ngForm"
-  (ngSubmit)="onSubmitForm(form)"
-  [ngFormOptions]="{ updateOn: 'blur' }"
->
+<form #form="ngForm" (ngSubmit)="onSubmitForm(form)">
   <label for="name">First Name</label>
   <pre>{{ data | json }}</pre>
   <input
     [(ngModel)]="data.userName"
-    [ngModelOptions]="{ name: 'userName', updateOn: 'blur' }"
     required
     pattern="^[a-zA-Z0-9_.]+$"
     minlength="5"
     name="userName"
+    angularExperimentBanWords="test"
     type="text"
     placeholder="Enter your name"
   />
+  <div *ngIf="userName.dirty && userName.hasError('required')" class="error">
+    the field is required
+  </div>
+  <div *ngIf="userName.dirty && userName.hasError('minlength')" class="error">
+    this length should be at least{{
+      userName.getError('minlength')?.requiredLength
+    }}
+  </div>
+  <div
+    *ngIf="userName.dirty && userName.hasError('angularExperimentBanWords')"
+    class="error"
+  >
+    The value {{ userName.getError('angularExperimentBanWords').bannedWord }} is
+    not allowed
+  </div>
+  <fieldset ngModelGroup="password" angularExperimentPasswordShouldMatch>
+    <input
+      [(ngModel)]="password"
+      required
+      name="password"
+      type="password"
+      placeholder="Enter your password"
+    />
+    <input
+      [(ngModel)]="confirmPassword"
+      #confirmPassword="ngModel"
+      required
+      name="confirmPassword"
+      type="password"
+      placeholder="Enter your confirmPassword"
+    />
+    <div
+      *ngIf="
+        confirmPassword.dirty &&
+        confirmPassword.hasError('angularExperimentPasswordShouldMatch')
+      "
+      class="error"
+    >
+      this password should match
+    </div>
+  </fieldset>
+
   <fieldset ngModelGroup="address">
     <label for="city">City</label>
     <input
