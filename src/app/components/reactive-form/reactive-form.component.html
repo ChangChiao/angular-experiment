@@ -1,0 +1,14 @@
+<form [formGroup]="form">
+  {{ form.value | json }}
+  <input formControlName="userName" type="text" />
+  <input formControlName="email" type="email" />
+
+  <fieldset formGroupName="password">
+    <input formControlName="password" type="password" />
+    <input formControlName="confirmPassword" type="password" />
+  </fieldset>
+  <fieldset formArrayName="phones">
+    <div *ngFor="let phone of form.controls.phones.controls; index as i"></div>
+    <input type="text" placeholder="phone" />
+  </fieldset>
+</form>

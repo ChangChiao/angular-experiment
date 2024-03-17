@@ -1,7 +1,7 @@
 <form
   #form="ngForm"
-  (reset)="onReset($event, form)"
-  (ngSubmit)="onSubmitForm(form)"
+  (reset)="onReset($event)"
+  (ngSubmit)="onSubmitForm()"
 >
   <label for="name">First Name</label>
   <pre>{{ data | json }}</pre>
