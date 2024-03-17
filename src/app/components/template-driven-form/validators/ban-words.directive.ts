@@ -20,8 +20,11 @@ import {
 export class BanWordsDirective implements Validator {
   @Input() set angularExperimentBanWords(value: string | string[]) {
     this.bannedWord = Array.isArray(value) ? value : [value];
+    this.onChange();
   }
   private bannedWord: string[] = [];
+
+  private onChange: () => void = () => {};
 
   constructor() {}
 
@@ -36,5 +39,9 @@ export class BanWordsDirective implements Validator {
             bannedWord: foundBannedWord,
           },
         };
+  }
+
+  registerOnValidatorChange(fn: () => void): void {
+    this.onChange = fn;
   }
 }
