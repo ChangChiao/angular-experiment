@@ -16,6 +16,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReactiveFormComponent {
+  phoneLabels = ['home', 'work', 'mobile'];
   form = new FormGroup({
     userName: new FormControl(''),
     email: new FormControl(''),
@@ -23,6 +24,26 @@ export class ReactiveFormComponent {
       password: new FormControl(''),
       confirmPassword: new FormControl(''),
     }),
-    phones: new FormArray([new FormControl('')]),
+    phones: new FormArray([
+      new FormGroup({
+        label: new FormControl(this.phoneLabels[0]),
+        phone: new FormControl(''),
+      }),
+    ]),
   });
+
+  addPhone() {
+    // this.form.controls.phones.push(new FormControl(''));
+    this.form.controls.phones.insert(
+      0,
+      new FormGroup({
+        label: new FormControl(),
+        phone: new FormControl(''),
+      })
+    );
+  }
+
+  remove(index: number) {
+    this.form.controls.phones.removeAt(index);
+  }
 }

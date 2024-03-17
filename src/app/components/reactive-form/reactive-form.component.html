@@ -7,8 +7,19 @@
     <input formControlName="password" type="password" />
     <input formControlName="confirmPassword" type="password" />
   </fieldset>
+  <button (click)="addPhone()">add</button>
   <fieldset formArrayName="phones">
-    <div *ngFor="let phone of form.controls.phones.controls; index as i"></div>
-    <input type="text" placeholder="phone" />
+    <div
+      *ngFor="let phone of form.controls.phones.controls; index as i"
+      [formGroupName]="i"
+    >
+      <select formControlName="label">
+        <option *ngFor="let label of phoneLabels" [value]="label">
+          {{ label }}
+        </option>
+      </select>
+      <input formControlName="phone" type="text" placeholder="phone" />
+      <button (click)="removePhone(i)">remove</button>
+    </div>
   </fieldset>
 </form>
