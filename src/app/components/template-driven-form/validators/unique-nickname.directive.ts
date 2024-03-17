@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Directive } from '@angular/core';
+import { ChangeDetectorRef, Directive } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidator,
   NG_ASYNC_VALIDATORS,
   ValidationErrors,
 } from '@angular/forms';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, finalize, map, of } from 'rxjs';
 
 @Directive({
   selector: '[angularExperimentUniqueNickname]',
@@ -20,7 +20,7 @@ import { Observable, catchError, map, of } from 'rxjs';
   ],
 })
 export class UniqueNicknameDirective implements AsyncValidator {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cd: ChangeDetectorRef) {}
 
   validate(
     control: AbstractControl<any, any>
@@ -31,7 +31,8 @@ export class UniqueNicknameDirective implements AsyncValidator {
       )
       .pipe(
         map((user) => (user.length ? { uniqueNickname: true } : null)),
-        catchError(() => of({ uniqueNickname: true }))
+        catchError(() => of({ uniqueNickname: true })),
+        finalize(() => this.cd.markForCheck())
       );
   }
 }

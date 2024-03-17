@@ -1,4 +1,8 @@
-<form #form="ngForm" (ngSubmit)="onSubmitForm(form)">
+<form
+  #form="ngForm"
+  (reset)="onReset($event, form)"
+  (ngSubmit)="onSubmitForm(form)"
+>
   <label for="name">First Name</label>
   <pre>{{ data | json }}</pre>
   <input
@@ -20,6 +24,14 @@
       userName.getError('minlength')?.requiredLength
     }}
   </div>
+  <div
+    *ngIf="userName.dirty && userName.hasError('uniqueNickname')"
+    class="error"
+  >
+    the userName is exist
+  </div>
+  <!-- api loading -->
+  <div *ngIf="nickname.pending">checking...</div>
   <div
     *ngIf="userName.dirty && userName.hasError('angularExperimentBanWords')"
     class="error"
@@ -91,5 +103,8 @@
     type="text"
     placeholder="Enter your name"
   /> -->
-  <button [disabled]="form.invalid" type="submit">submit</button>
+  <button [disabled]="form.invalid || form pending" type="submit">
+    submit
+  </button>
+  <button type="reset">reset</button>
 </form>

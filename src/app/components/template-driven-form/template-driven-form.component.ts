@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { BanWordsDirective } from './validators/ban-words.directive';
 import { PasswordShouldMatchDirective } from './validators/password-should-match.directive';
@@ -19,7 +24,7 @@ import { UniqueNicknameDirective } from './validators/unique-nickname.directive'
   styleUrl: './template-driven-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemplateDrivenFormComponent {
+export class TemplateDrivenFormComponent implements AfterViewInit {
   data = {
     userName: '',
     password: {
@@ -33,11 +38,28 @@ export class TemplateDrivenFormComponent {
     age: '',
   };
 
+  @ViewChild('NgForm') form!: NgForm;
+
+  private initialFormValues: unknown;
+
   get isAdultUserName() {
     return this.data.userName.startsWith('adult');
   }
 
-  onSubmitForm(form: NgForm) {
-    console.log('form', form.value);
+  onSubmitForm() {
+    console.log('form', this.form.value);
+    this.form.resetForm(this.form.value);
+    this.initialFormValues = this.form.value;
+  }
+
+  onReset(e: Event) {
+    e.preventDefault();
+    this.form.resetForm();
+  }
+
+  ngAfterViewInit(): void {
+    queueMicrotask(() => {
+      this.initialFormValues = this.form.value;
+    });
   }
 }
