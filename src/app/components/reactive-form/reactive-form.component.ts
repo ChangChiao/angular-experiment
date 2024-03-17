@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Observable, tap } from 'rxjs';
+import { UserSkillService } from './user-skill.service';
 
 @Component({
   selector: 'angular-experiment-reactive-form',
@@ -15,8 +17,9 @@ import {
   styleUrl: './reactive-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReactiveFormComponent {
+export class ReactiveFormComponent implements OnInit {
   phoneLabels = ['home', 'work', 'mobile'];
+  skill$!: Observable<string[]>;
   form = new FormGroup({
     userName: new FormControl(''),
     email: new FormControl(''),
@@ -30,7 +33,10 @@ export class ReactiveFormComponent {
         phone: new FormControl(''),
       }),
     ]),
+    skill: new FormGroup({}),
   });
+
+  constructor(private userSkills: UserSkillService) {}
 
   addPhone() {
     // this.form.controls.phones.push(new FormControl(''));
@@ -45,5 +51,30 @@ export class ReactiveFormComponent {
 
   remove(index: number) {
     this.form.controls.phones.removeAt(index);
+  }
+
+  onSubmit() {
+    console.log('form', this.form.value);
+  }
+
+  buildSkillControls(skills: string[]) {
+    skills.forEach((skill) => {
+      this.form.controls.skill.addControl(
+        skill,
+        new FormControl(false, { nonNullable: true })
+      );
+    });
+  }
+
+  ngOnInit() {
+    this.form.valueChanges.subscribe((val) => {
+      console.log('form value changed', val);
+    });
+
+    this.skill$ = this.userSkills.getSkills().pipe(
+      tap((skills) => {
+        this.buildSkillControls(skills);
+      })
+    );
   }
 }

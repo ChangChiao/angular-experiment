@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="form">
   {{ form.value | json }}
   <input formControlName="userName" type="text" />
   <input formControlName="email" type="email" />
@@ -22,4 +22,19 @@
       <button (click)="removePhone(i)">remove</button>
     </div>
   </fieldset>
+  <fieldset formGroupName="skill">
+    <legend>skill</legend>
+    <ng-container *ngIf="skill$ | async as skill; else loading">
+      <div *ngFor="let item of skills">
+        <input type="checkbox" [formControlName]="item" [id]="item" />
+        <label [for]="item" for="">{{ item | titlecase }}</label>
+      </div>
+    </ng-container>
+  </fieldset>
+
+  <ng-template #loading>
+    <div>loading...</div>
+  </ng-template>
+
+  <button type="submit"></button>
 </form>
