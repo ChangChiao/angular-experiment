@@ -26,6 +26,8 @@
     The value {{ userName.getError('angularExperimentBanWords').bannedWord }} is
     not allowed
   </div>
+
+  <!-- group validation -->
   <fieldset ngModelGroup="password" angularExperimentPasswordShouldMatch>
     <input
       [(ngModel)]="password"
@@ -53,6 +55,7 @@
     </div>
   </fieldset>
 
+  <!-- group input -->
   <fieldset ngModelGroup="address">
     <label for="city">City</label>
     <input
@@ -69,6 +72,14 @@
       placeholder="Enter your state"
     />
   </fieldset>
+
+  <!-- conditional validation -->
+  <input
+    name="age"
+    [(ngModel)]="age"
+    [required]="isAdultUserName"
+    type="text"
+  />
 
   <!-- standalone = out of form control -->
 

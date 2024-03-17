@@ -28,7 +28,12 @@ export class TemplateDrivenFormComponent {
       city: '',
       street: '',
     },
+    age: '',
   };
+
+  get isAdultUserName() {
+    return this.data.userName.startsWith('adult');
+  }
 
   onSubmitForm(form: NgForm) {
     console.log('form', form.value);
