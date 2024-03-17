@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { BanWordsDirective } from './validators/ban-words.directive';
 import { PasswordShouldMatchDirective } from './validators/password-should-match.directive';
+import { UniqueNicknameDirective } from './validators/unique-nickname.directive';
 
 @Component({
   selector: 'angular-experiment-template-driven-form',
@@ -12,6 +13,7 @@ import { PasswordShouldMatchDirective } from './validators/password-should-match
     BanWordsDirective,
     PasswordShouldMatchDirective,
     FormsModule,
+    UniqueNicknameDirective,
   ],
   templateUrl: './template-driven-form.component.html',
   styleUrl: './template-driven-form.component.scss',
