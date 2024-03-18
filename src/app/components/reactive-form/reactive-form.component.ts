@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
-  FormArray,
+  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { Observable, tap } from 'rxjs';
 import { UserSkillService } from './user-skill.service';
@@ -20,23 +21,40 @@ import { UserSkillService } from './user-skill.service';
 export class ReactiveFormComponent implements OnInit {
   phoneLabels = ['home', 'work', 'mobile'];
   skill$!: Observable<string[]>;
-  form = new FormGroup({
-    userName: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormGroup({
-      password: new FormControl(''),
-      confirmPassword: new FormControl(''),
+  // form = new FormGroup({
+  //   userName: new FormControl(''),
+  //   email: new FormControl(''),
+  //   password: new FormGroup({
+  //     password: new FormControl(''),
+  //     confirmPassword: new FormControl(''),
+  //   }),
+  //   phones: new FormArray([
+  //     new FormGroup({
+  //       label: new FormControl(this.phoneLabels[0]),
+  //       phone: new FormControl(''),
+  //     }),
+  //   ]),
+  //   skill: new FormGroup({}),
+  // });
+
+  form = this.fb.group({
+    userName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]],
+    email: ['', [Validators.required, Validators.email]],
+    birthDate: this.fb.nonNullable.control(''), //avoid null or undefined
+    password: this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: [''],
     }),
-    phones: new FormArray([
-      new FormGroup({
-        label: new FormControl(this.phoneLabels[0]),
-        phone: new FormControl(''),
+    phones: this.fb.array([
+      this.fb.group({
+        label: this.phoneLabels[0],
+        phone: [''],
       }),
     ]),
-    skill: new FormGroup({}),
+    skill: this.fb.group({}),
   });
 
-  constructor(private userSkills: UserSkillService) {}
+  constructor(private userSkills: UserSkillService, private fb: FormBuilder) {}
 
   addPhone() {
     // this.form.controls.phones.push(new FormControl(''));
@@ -59,10 +77,7 @@ export class ReactiveFormComponent implements OnInit {
 
   buildSkillControls(skills: string[]) {
     skills.forEach((skill) => {
-      this.form.controls.skill.addControl(
-        skill,
-        new FormControl(false, { nonNullable: true })
-      );
+      this.form.controls.skill.addControl(skill, new FormControl(false));
     });
   }
 
