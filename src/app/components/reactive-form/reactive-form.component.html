@@ -5,6 +5,15 @@
 
   <fieldset formGroupName="password">
     <input formControlName="password" type="password" />
+    <ng-container *ngIf="form.controls.password as password">
+      <div
+        class="error"
+        *ngIf="password.dirty && password.hasError('minLength')"
+      >
+        this field should be at least
+        {{ password.getError('minlength').requiredLength }} characters
+      </div>
+    </ng-container>
     <input formControlName="confirmPassword" type="password" />
   </fieldset>
   <button (click)="addPhone()">add</button>
@@ -25,7 +34,7 @@
   <fieldset formGroupName="skill">
     <legend>skill</legend>
     <ng-container *ngIf="skill$ | async as skill; else loading">
-      <div *ngFor="let item of skills">
+      <div *ngFor="let item of skill">
         <input type="checkbox" [formControlName]="item" [id]="item" />
         <label [for]="item" for="">{{ item | titlecase }}</label>
       </div>

@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, tap } from 'rxjs';
+import { banWords } from './ban-words.validator';
+import { passwordShouldMatch } from './password-should-match';
 import { UserSkillService } from './user-skill.service';
 
 @Component({
@@ -38,7 +40,14 @@ export class ReactiveFormComponent implements OnInit {
   // });
 
   form = this.fb.group({
-    userName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+$/)]],
+    userName: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9]+$/),
+        banWords(['test']),
+      ],
+    ],
     email: ['', [Validators.required, Validators.email]],
     birthDate: this.fb.nonNullable.control(''), //avoid null or undefined
     password: this.fb.group({
@@ -46,10 +55,13 @@ export class ReactiveFormComponent implements OnInit {
       confirmPassword: [''],
     }),
     phones: this.fb.array([
-      this.fb.group({
-        label: this.phoneLabels[0],
-        phone: [''],
-      }),
+      this.fb.group(
+        {
+          label: this.phoneLabels[0],
+          phone: [''],
+        },
+        { validators: passwordShouldMatch }
+      ),
     ]),
     skill: this.fb.group({}),
   });
@@ -67,7 +79,7 @@ export class ReactiveFormComponent implements OnInit {
     );
   }
 
-  remove(index: number) {
+  removePhone(index: number) {
     this.form.controls.phones.removeAt(index);
   }
 
