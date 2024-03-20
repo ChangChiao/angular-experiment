@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,9 +12,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable, startWith, tap } from 'rxjs';
+import { Observable, bufferCount, filter, startWith, tap } from 'rxjs';
 import { banWords } from './ban-words.validator';
-import { passwordShouldMatch } from './password-should-match';
+import { passwordShouldMatch } from './password-should-match.validator';
+import { UniqueNicknameValidator } from './unique-nickname.validator';
 import { UserSkillService } from './user-skill.service';
 
 @Component({
@@ -42,11 +48,17 @@ export class ReactiveFormComponent implements OnInit {
   form = this.fb.group({
     userName: [
       '',
-      [
-        Validators.required,
-        Validators.pattern(/^[a-zA-Z0-9]+$/),
-        banWords(['test']),
-      ],
+      {
+        validators: [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9]+$/),
+          banWords(['test']),
+        ],
+        asyncValidators: [
+          this.uniqueNickName.validate.bind(this.uniqueNickName),
+        ],
+        updateOn: 'blur',
+      },
     ],
     email: ['', [Validators.required, Validators.email]],
     birthDate: this.fb.nonNullable.control(''),
@@ -67,7 +79,12 @@ export class ReactiveFormComponent implements OnInit {
     skill: this.fb.group({}),
   });
 
-  constructor(private userSkills: UserSkillService, private fb: FormBuilder) {}
+  constructor(
+    private userSkills: UserSkillService,
+    private fb: FormBuilder,
+    private uniqueNickName: UniqueNicknameValidator,
+    private cd: ChangeDetectorRef
+  ) {}
 
   addPhone() {
     // this.form.controls.phones.push(new FormControl(''));
@@ -84,7 +101,8 @@ export class ReactiveFormComponent implements OnInit {
     this.form.controls.phones.removeAt(index);
   }
 
-  onSubmit() {
+  onSubmit(e: Event) {
+    this.form.reset();
     console.log('form', this.form.value);
   }
 
@@ -115,6 +133,16 @@ export class ReactiveFormComponent implements OnInit {
         }
         this.form.controls.passport.updateValueAndValidity();
         this.form.controls.passport.markAsDirty();
+      });
+
+    this.form.statusChanges
+      .pipe(
+        bufferCount(2, 1),
+        filter(([prev]) => prev === 'PENDING')
+      )
+      .subscribe((status) => {
+        this.cd.markForCheck();
+        console.log('form status', status);
       });
   }
 }

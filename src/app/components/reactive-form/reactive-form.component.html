@@ -1,6 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit($event)" class="form">
   {{ form.value | json }}
   <input formControlName="userName" type="text" />
+  <div class="error" *ng-if="nickName.pending">checking userName...</div>
   <input formControlName="email" type="email" />
 
   <fieldset formGroupName="password">
@@ -45,5 +46,5 @@
     <div>loading...</div>
   </ng-template>
 
-  <button type="submit"></button>
+  <button [disabled]="form.pending || form.invalid" type="submit"></button>
 </form>
