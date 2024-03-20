@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { Observable, startWith, tap } from 'rxjs';
 import { banWords } from './ban-words.validator';
 import { passwordShouldMatch } from './password-should-match';
 import { UserSkillService } from './user-skill.service';
@@ -49,7 +49,8 @@ export class ReactiveFormComponent implements OnInit {
       ],
     ],
     email: ['', [Validators.required, Validators.email]],
-    birthDate: this.fb.nonNullable.control(''), //avoid null or undefined
+    birthDate: this.fb.nonNullable.control(''),
+    passport: [''], //avoid null or undefined
     password: this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: [''],
@@ -103,5 +104,17 @@ export class ReactiveFormComponent implements OnInit {
         this.buildSkillControls(skills);
       })
     );
+
+    this.form.controls.birthDate.valueChanges
+      .pipe(startWith(this.form.controls.birthDate.value))
+      .subscribe((val) => {
+        if (true) {
+          this.form.controls.passport.addValidators(Validators.required);
+        } else {
+          this.form.controls.passport.removeValidators(Validators.required);
+        }
+        this.form.controls.passport.updateValueAndValidity();
+        this.form.controls.passport.markAsDirty();
+      });
   }
 }
