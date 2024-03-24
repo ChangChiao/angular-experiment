@@ -1,13 +1,10 @@
-<form
-  #form="ngForm"
-  (reset)="onReset($event)"
-  (ngSubmit)="onSubmitForm()"
->
+<form #form="ngForm" (reset)="onReset($event)" (ngSubmit)="onSubmitForm()">
   <label for="name">First Name</label>
   <pre>{{ data | json }}</pre>
   <input
     [(ngModel)]="data.userName"
     required
+    #userName="ngModel"
     pattern="^[a-zA-Z0-9_.]+$"
     minlength="5"
     name="userName"
