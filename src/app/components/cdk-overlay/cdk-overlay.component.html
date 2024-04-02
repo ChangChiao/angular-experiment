@@ -1,0 +1,56 @@
+<div
+  class="test"
+  (click)="handleOpen()"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+>
+  test
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isShow()"
+  [cdkConnectedOverlayWidth]="200"
+  [cdkConnectedOverlayHeight]="200"
+  [cdkConnectedOverlayOffsetX]="10"
+  [cdkConnectedOverlayOffsetY]="-10"
+>
+  <div class="panel">
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li>Item 4</li>
+      <li>Item 5</li>
+      <li>Item 6</li>
+      <li>Item 7</li>
+    </ul>
+    <button (click)="handleClose()">close</button>
+  </div>
+</ng-template>
+
+<!-- <ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isShow()"
+  [cdkConnectedOverlayWidth]="200"
+  [cdkConnectedOverlayHeight]="200"
+  [cdkConnectedOverlayOffsetX]="10"
+  [cdkConnectedOverlayOffsetY]="-10"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  (backdropClick)="handleClose()"
+  (detach)="handleClose()"
+>
+  <div class="panel">
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li>Item 4</li>
+      <li>Item 5</li>
+      <li>Item 6</li>
+      <li>Item 7</li>
+    </ul>
+  </div>
+</ng-template> -->

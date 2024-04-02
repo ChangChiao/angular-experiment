@@ -12,6 +12,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { CdkOverlayComponent } from 'src/app/components/cdk-overlay/cdk-overlay.component';
 import { CustomSelectComponent } from 'src/app/components/custom-select/custom-select.component';
 import { DataImportComponent } from 'src/app/components/data-import/data-import.component';
 import { DraggableComponent } from 'src/app/components/draggable/draggable.component';
@@ -38,9 +39,11 @@ import { TableFormComponent } from 'src/app/components/table-form/table-form.com
     NgrxSignalStoreComponent,
     DynamicFormComponent,
     CustomSelectComponent,
+    CdkOverlayComponent,
   ],
   template: `
     <div>
+      <angular-experiment-cdk-overlay></angular-experiment-cdk-overlay>
       <angular-experiment-custom-select></angular-experiment-custom-select>
       <angular-experiment-dynamic-form></angular-experiment-dynamic-form>
       <angular-experiment-ngrx-signal-store></angular-experiment-ngrx-signal-store>
