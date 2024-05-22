@@ -22,7 +22,7 @@ import { PingPongComponent } from 'src/app/components/ping-pong/ping-pong.compon
 import { SetupComponent } from 'src/app/components/setup/setup.component';
 import { SocketComponent } from 'src/app/components/socket.component';
 import { TableFormComponent } from 'src/app/components/table-form/table-form.component';
-
+import { VirtualizedListComponent } from 'src/app/components/virtualized-list/virtualized-list.component';
 @Component({
   selector: 'angular-experiment-index',
   standalone: true,
@@ -40,9 +40,11 @@ import { TableFormComponent } from 'src/app/components/table-form/table-form.com
     DynamicFormComponent,
     CustomSelectComponent,
     CdkOverlayComponent,
+    VirtualizedListComponent,
   ],
   template: `
     <div>
+      <angular-experiment-virtualized-list></angular-experiment-virtualized-list>
       <angular-experiment-cdk-overlay></angular-experiment-cdk-overlay>
       <angular-experiment-custom-select></angular-experiment-custom-select>
       <angular-experiment-dynamic-form></angular-experiment-dynamic-form>
