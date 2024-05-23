@@ -1,0 +1,12 @@
+<cdk-virtual-scroll-viewport itemSize="50" class="viewport">
+  <table>
+    <tr>
+      <th>name</th>
+      <th>age</th>
+    </tr>
+    <tr *cdkVirtualFor="let item of data" class="row">
+      <td>{{ item.name }}</td>
+      <td>{{ item.age }}</td>
+    </tr>
+  </table>
+</cdk-virtual-scroll-viewport>

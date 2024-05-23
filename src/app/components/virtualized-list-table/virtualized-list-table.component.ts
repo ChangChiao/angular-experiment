@@ -1,18 +1,25 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
+interface Data {
+  name: string;
+  age: number;
+}
+
 @Component({
-  selector: 'angular-experiment-virtualized-list',
+  selector: 'angular-experiment-virtualized-list-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
-  templateUrl: './virtualized-list.component.html',
-  styleUrl: './virtualized-list.component.scss',
+  imports: [CommonModule, MatTableModule, ScrollingModule],
+  templateUrl: './virtualized-list-table.component.html',
+  styleUrl: './virtualized-list-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VirtualizedListComponent implements OnInit {
-  dataSource = new MatTableDataSource<{ name: string; age: number }>([]);
+export class VirtualizedListTableComponent implements OnInit {
+  dataSource = new MatTableDataSource<Data>([]);
   displayedColumns: string[] = ['name', 'age'];
+  data: Data[] = [];
 
   generateData() {
     const data = [];
@@ -26,6 +33,8 @@ export class VirtualizedListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.data = this.generateData();
     this.dataSource.data = this.generateData();
+    console.log('virtualized-list-table.component.ts');
   }
 }

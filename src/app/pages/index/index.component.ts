@@ -22,6 +22,7 @@ import { PingPongComponent } from 'src/app/components/ping-pong/ping-pong.compon
 import { SetupComponent } from 'src/app/components/setup/setup.component';
 import { SocketComponent } from 'src/app/components/socket.component';
 import { TableFormComponent } from 'src/app/components/table-form/table-form.component';
+import { VirtualizedListTableComponent } from 'src/app/components/virtualized-list-table/virtualized-list-table.component';
 import { VirtualizedListComponent } from 'src/app/components/virtualized-list/virtualized-list.component';
 @Component({
   selector: 'angular-experiment-index',
@@ -41,9 +42,11 @@ import { VirtualizedListComponent } from 'src/app/components/virtualized-list/vi
     CustomSelectComponent,
     CdkOverlayComponent,
     VirtualizedListComponent,
+    VirtualizedListTableComponent,
   ],
   template: `
     <div>
+      <angular-experiment-virtualized-list-table></angular-experiment-virtualized-list-table>
       <angular-experiment-virtualized-list></angular-experiment-virtualized-list>
       <angular-experiment-cdk-overlay></angular-experiment-cdk-overlay>
       <angular-experiment-custom-select></angular-experiment-custom-select>
