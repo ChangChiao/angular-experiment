@@ -1,6 +1,12 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 interface Data {
@@ -16,28 +22,12 @@ interface Data {
   styleUrl: './virtualized-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VirtualizedListComponent implements OnInit {
+export class VirtualizedListComponent {
+  @Input() set people(data: Data[]) {
+    this.dataSource.data = data;
+  }
+  @Output() personSelected = new EventEmitter<Data>();
+
   dataSource = new MatTableDataSource<Data>([]);
   displayedColumns: string[] = ['name', 'age'];
-  flag = false;
-  data: Data[] = [];
-
-  generateData() {
-    const data = [];
-    for (let i = 0; i < 100; i++) {
-      data.push({
-        name: `name-${i}`,
-        age: i,
-      });
-    }
-    return data;
-  }
-
-  ngOnInit() {
-    this.data = this.generateData();
-    this.dataSource.data = this.data;
-    // setTimeout(() => {
-    //   this.flag = true;
-    // }, 1000);
-  }
 }

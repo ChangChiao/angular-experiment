@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   OnInit,
+  Output,
   inject,
 } from '@angular/core';
 import {
@@ -24,6 +26,18 @@ import { SocketComponent } from 'src/app/components/socket.component';
 import { TableFormComponent } from 'src/app/components/table-form/table-form.component';
 import { VirtualizedListTableComponent } from 'src/app/components/virtualized-list-table/virtualized-list-table.component';
 import { VirtualizedListComponent } from 'src/app/components/virtualized-list/virtualized-list.component';
+import { VirtualizedViewportComponent } from 'src/app/components/virtualized-viewport/virtualized-viewport.component';
+
+interface Data {
+  name: string;
+  age: number;
+}
+
+interface ListRange {
+  start: number;
+  end: number;
+}
+
 @Component({
   selector: 'angular-experiment-index',
   standalone: true,
@@ -43,11 +57,22 @@ import { VirtualizedListComponent } from 'src/app/components/virtualized-list/vi
     CdkOverlayComponent,
     VirtualizedListComponent,
     VirtualizedListTableComponent,
+    VirtualizedViewportComponent,
   ],
   template: `
     <div>
+      <angular-experiment-virtualized-viewport
+        (itemsRangeChange)="updatePeopleSlice($event)"
+        [totalItems]="people.length"
+        [itemSize]="50"
+      >
+        <angular-experiment-virtualized-list
+          [people]="peopleSlice"
+          (personSelected)="personSelected.emit($event)"
+        >
+        </angular-experiment-virtualized-list>
+      </angular-experiment-virtualized-viewport>
       <angular-experiment-virtualized-list-table></angular-experiment-virtualized-list-table>
-      <angular-experiment-virtualized-list></angular-experiment-virtualized-list>
       <angular-experiment-cdk-overlay></angular-experiment-cdk-overlay>
       <angular-experiment-custom-select></angular-experiment-custom-select>
       <angular-experiment-dynamic-form></angular-experiment-dynamic-form>
@@ -70,8 +95,24 @@ import { VirtualizedListComponent } from 'src/app/components/virtualized-list/vi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IndexComponent implements OnInit {
+  people: Data[] = [];
+  @Output() personSelected = new EventEmitter<Data>();
+
+  peopleSlice: Data[] = [];
+
   #fb = inject(FormBuilder);
   form!: FormGroup;
+
+  generateData() {
+    const data = [];
+    for (let i = 0; i < 500; i++) {
+      data.push({
+        name: `name-${i}`,
+        age: i,
+      });
+    }
+    return data;
+  }
 
   ngOnInit() {
     this.form = this.#fb.group({
@@ -79,9 +120,14 @@ export class IndexComponent implements OnInit {
       projectName: ['', Validators.required],
     });
     this.form.valueChanges.subscribe((value) => console.log('value', value));
+    this.people = this.generateData();
   }
 
   submit() {
     console.log('this.form', this.form.value);
+  }
+
+  updatePeopleSlice(range: ListRange) {
+    this.peopleSlice = this.people.slice(range.start, range.end);
   }
 }

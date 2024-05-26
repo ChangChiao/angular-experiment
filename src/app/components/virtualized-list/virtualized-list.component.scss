@@ -1,18 +1,7 @@
-.viewport {
-  height: 200px;
-  width: 100%;
-  border: 1px solid black;
-  overflow: scroll;
-}
-
-.mat-row,
-.mat-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 50px;
-}
-
-.item {
+.mat-mdc-row,
+.mat-mdc-header-row {
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-around;
   height: 50px;
 }
