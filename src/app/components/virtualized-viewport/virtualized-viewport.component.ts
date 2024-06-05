@@ -49,11 +49,21 @@ export class VirtualizedViewportComponent implements OnInit, OnChanges {
     this.cdkViewport?.renderedRangeStream.subscribe((range: ListRange) => {
       this.itemsRangeChange.emit(range);
     });
+
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 3000);
+  }
+
+  scrollToBottom() {
+    this.cdkViewport?.scrollTo({ bottom: 0 });
+    console.log('scrollToBottom-1');
+    // this.cdkViewport?.scrollToIndex(this.totalItems - 1);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItems']) {
-      this.virtualItems = Array.from({ length: this.totalItems });
+      this.virtualItems = Array.from({ length: this.totalItems + 1 });
       this.cdkViewport?.checkViewportSize();
     }
   }

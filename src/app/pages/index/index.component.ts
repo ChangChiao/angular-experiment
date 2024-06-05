@@ -128,6 +128,7 @@ export class IndexComponent implements OnInit {
   }
 
   updatePeopleSlice(range: ListRange) {
+    console.log('updatePeopleSlice', range);
     this.peopleSlice = this.people.slice(range.start, range.end);
   }
 }
