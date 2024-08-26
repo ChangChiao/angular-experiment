@@ -14,6 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
 import { CdkOverlayComponent } from 'src/app/components/cdk-overlay/cdk-overlay.component';
 import { CustomSelectComponent } from 'src/app/components/custom-select/custom-select.component';
 import { DataImportComponent } from 'src/app/components/data-import/data-import.component';
@@ -42,6 +43,7 @@ interface ListRange {
   selector: 'angular-experiment-index',
   standalone: true,
   imports: [
+    RouterModule,
     CommonModule,
     SetupComponent,
     DataImportComponent,
@@ -61,6 +63,8 @@ interface ListRange {
   ],
   template: `
     <div>
+      <a routerLink="/dynamic">dynamic</a>
+      <a routerLink="/fixed">fixed</a>
       <angular-experiment-virtualized-viewport
         (itemsRangeChange)="updatePeopleSlice($event)"
         [totalItems]="people.length"

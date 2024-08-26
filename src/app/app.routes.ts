@@ -15,4 +15,18 @@ export const appRoutes: Route[] = [
       ],
     },
   },
+  {
+    path: 'dynamic',
+    loadChildren: () =>
+      import('./pages/signal-store/signal-store.routes').then(
+        (m) => m.DATA_PAGE_ROUTES
+      ),
+  },
+  {
+    path: 'fixed',
+    loadChildren: () =>
+      import('./pages/signal-store/signal-store.routes').then(
+        (m) => m.DATA_PAGE_ROUTES
+      ),
+  },
 ];
